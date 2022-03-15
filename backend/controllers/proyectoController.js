@@ -1,0 +1,127 @@
+import Proyecto from '../models/Proyecto.js'
+import Usuario from '../models/Usuario.js';
+const obtenerProyectos = async (req, res) =>{
+    //traiendo todos los proyectos que esten almacenado
+    //Donde creador sea igual para que no traiga todos los proyecto
+    const proyectos = await Proyecto.find().where('creador').equals(req.usuario).select('-tareas')
+
+    res.json(proyectos)
+} 
+
+const nuevoProyecto = async (req, res ) => {
+    //instanciando con la informacion de postman
+    const proyecto =  new Proyecto(req.body)
+    //asignando con el creador
+    proyecto.creador = req.usuario._id
+
+     try {
+         //Guardando el proyecto con .save
+         const proyectoAlmacenado = await proyecto.save()
+         //Cuando el usuario guarde en react se le regresara el proyecto que se almaceno
+         res.json(proyectoAlmacenado);  
+     }catch(error){
+         console.log(error)
+     }
+}
+const obtenerProyecto = async(req, res) => {
+   const {id} = req.params
+    //Buscando proyecto por id 
+     const proyecto = await Proyecto.findById(id).populate('tareas')
+
+     if(!proyecto){
+         const error = new Error("No encontrado")
+         return res.status(404).json({msg: error.message}); 
+     }
+     //Comprabar de que la persona que quiere acceder a proyecto es el que lo creo   
+     if(proyecto.creador.toString() !== req.usuario._id.toString()){
+         const error = new Error("Accion no valida")
+         return res.status(401).json({msg: error.message}); 
+     }
+
+     //Obtener las tareas del proyecto
+      //Tienes que ser el creador del proyecto o colaborador
+        
+     res.json(proyecto)
+
+};
+
+const editarProyecto = async(req, res) => {
+     const {id} = req.params
+     //Buscando proyecto por id 
+     const proyecto = await Proyecto.findById(id)
+
+     //Verificacion si existe el proyecto
+     if(!proyecto){
+         const error = new Error("No encontrado")
+         return res.status(404).json({msg: error.message}); 
+     }
+    // //Comprabar de que la persona que quiere acceder a proyecto es el que lo creo   
+    //Comprobando de que la persona que lo creo pueda eliminar 
+    if(proyecto.creador.toString() !== req.usuario._id.toString()){
+         const error = new Error("Accion no valida")
+         return res.status(401).json({msg: error.message}); 
+     }
+    //Asignando todo el todo lo que se llenaria en el formulario o si no que se quede asi porque si no se eliminaria el dato
+     proyecto.nombre = req.body.nombre || proyecto.nombre;
+     proyecto.descripcion = req.body.descripcion || proyecto.descripcion;
+     proyecto.fechaEntrega = req.body.fechaEntrega || proyecto.fechaEntrega;
+     proyecto.cliente = req.body.cliente || proyecto.cliente;
+
+     try{
+        const proyectoAlmacenado = await proyecto.save()
+        res.json(proyectoAlmacenado)
+     }catch(error){
+         console.log(error)
+     }
+
+}
+const eliminarProyecto = async(req,res) =>{
+    const {id} = req.params
+    //Buscando proyecto por id 
+    const proyecto = await Proyecto.findById(id)
+
+    //Verificacion si existe el proyecto
+    if(!proyecto){
+        const error = new Error("No encontrado")
+        return res.status(404).json({msg: error.message}); 
+    }
+   // //Comprabar de que la persona que quiere acceder a proyecto es el que lo creo   
+   //Comprobando de que la persona que lo creo pueda eliminar 
+   if(proyecto.creador.toString() !== req.usuario._id.toString()){
+        const error = new Error("Accion no valida")
+        return res.status(401).json({msg: error.message}); 
+    }
+    try{
+        await proyecto.deleteOne();
+        res.json({msg: 'Proyecto Eliminado'})
+    }catch(error){
+        console.log(error)
+    }
+
+}
+
+const buscarColaborador = async(req,res) =>{
+console.log(req.body)
+
+}
+const agregarColaborador = async(req,res) => {
+
+}
+
+const eliminarColaborador = async(req, res) => {
+
+}
+
+
+
+export {
+    obtenerProyectos,
+    nuevoProyecto,
+    obtenerProyecto,
+    editarProyecto,
+    eliminarProyecto,
+    buscarColaborador,
+    agregarColaborador,
+    eliminarColaborador,
+     
+}
