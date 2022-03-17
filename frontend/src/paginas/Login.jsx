@@ -94,8 +94,8 @@ export const Login = () => {
 
         <input
             type="submit"
-            value="Iniciar Sesion"
-            className="bg-purple-400 mb-5 w-full py-3 text-white uppercase font-bold rounded
+            value="Iniciar sesión"
+            className="bg-purple-900 mb-5 w-full py-3 text-white uppercase font-bold rounded
             hover:curso-pointer hover:bg-purple-500 transition-colors" 
         />
 
@@ -106,12 +106,12 @@ export const Login = () => {
             className="block text-center my-5 text-slate-500 uppercase text-sm"
             //Redirigiendo a la pagina de registrar
             to="/registrar"
-        >No tienes Cuenta? Registrate</Link>
+        >¿No tienes Cuenta? Regístrate</Link>
         <Link
             className="block text-center my-5 text-slate-500 uppercase text-sm"
             //Redirigiendo a la pagina de registrar
             to="/olvide-password"
-        >Se te olvido la contrasena? :0</Link>
+        >¿Se te olvidó la contraseña? :0</Link>
 
     </nav>
     </>

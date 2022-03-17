@@ -41,7 +41,11 @@ useEffect(()=>{
 
     }
     autenticarUsuario()
+    
 }, [])
+    const cerrarSesionAuth = () =>{
+        setAuth({})
+    }
 
     //Informacion disponible que esten para los demas componentes
     return(
@@ -50,7 +54,8 @@ useEffect(()=>{
             //Lo que esta dentro de value es lo que estara en disposicion a los demas componentes
             auth,
             setAuth,
-            cargando
+            cargando,
+            cerrarSesionAuth
         }}
         >
             {children}

@@ -1,13 +1,23 @@
+
 //Importando el hook de proyectos
 import useProyectos from "../hooks/useProyectos"
 import PreviewProyecto from "../components/PreviewProyecto"
+import Alerta from "../components/Alerta"
+//Importando el cliente de socket io
+
+
 const Proyectos = () => {
-  const {proyectos} = useProyectos()
+  const {proyectos, alerta} = useProyectos()
+
+  //Conectando hacia al backend
+  
+
+  const {msg } = alerta 
 
   return (
     <>
-      <h1 className="text-4xl font-black ">Crear Proyecto</h1>
-
+      <h1 className="text-4xl font-black ">Proyectos</h1>
+    {msg && <Alerta alerta={alerta}/>}
       <div className="bg-white shadown mt-10 rounded-lg ">
       {proyectos.length ? 
       proyectos.map(proyecto =>(

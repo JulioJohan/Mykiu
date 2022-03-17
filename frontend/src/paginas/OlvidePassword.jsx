@@ -62,7 +62,7 @@ const OlvidePassword = () => {
     <input
         type="submit"
         value="Enviar Instrucciones"
-        className="bg-purple-400 mb-5 w-full py-3 text-white uppercase font-bold rounded
+        className="bg-violet-900 mb-5 w-full py-3 text-white uppercase font-bold rounded
         hover:curso-pointer hover:bg-purple-500 transition-colors" 
     />
 

@@ -99,7 +99,13 @@ const eliminarTarea = async (req, res)=>{
          }
 
          try{
-            await tarea.deleteOne()
+             //Identificacion de la tarea asignado al proyecto
+             const proyecto = await Proyecto.findById(tarea.proyecto)
+            //pull para sacar las tareas
+             proyecto.tareas.pull (tarea._id)
+            //Promise puedes enviar diferentes awaits 
+            //Elimina la referencia como esta en los proyectos como en las tareas
+            await Promise.allSettled([ await proyecto.save(),await tarea.deleteOne() ])
             res.json({msg : 'La Tarea se Elimino'})
          }catch(error){
             console.log(error)
@@ -109,6 +115,37 @@ const eliminarTarea = async (req, res)=>{
 }
 
 const cambiarEstado = async (req, res) => {
+    //Comprobaciones del servidor
+     //obtner la id de de la tarea
+     const {id} = req.params
+     //obteniedno la tarea y el que creo la tarea de ese proyecto
+     const tarea = await Tarea.findById(id)
+     .populate('proyecto')
+    
+     //404 es cuando no encontraste la tarea
+     if(!tarea){
+         const error =  new Error ('Tarea no encontrada')
+         return res.status(404).json({msg: error.message})      
+     }
+        //comprobando que sea del mismo usuario
+         //comprobando que la taraa no haya creado
+    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString() && 
+    !tarea.proyecto.colaboradores.some
+    (colaborador => colaborador._id.toString() === req.usuario._id.toString()
+    
+    )
+    ){
+            const error =  new Error ('accion no valida')
+            return res.status(403).json({msg: error.message})   
+    }
+    tarea.estado =! tarea.estado
+    tarea.completado = req.usuario._id
+    await tarea.save()
+
+    const tareaAlmacenada = await Tarea.findById(id)
+     .populate('proyecto').completado('completado')
+
+    res.json(tareaAlmacenada)
 
 }
 

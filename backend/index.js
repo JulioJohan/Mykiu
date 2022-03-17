@@ -59,6 +59,46 @@ const PORT = process.env.PORT || 4000;
 
 
 //Asignando el puerto de nuestro servidor
-app.listen(4000, () =>{
+const servidor = app.listen(4000, () =>{
     console.log(`Servidor Corriendo en el puerto ${PORT}`)
 });
+import {Server, Socket} from 'socket.io'
+//Pasando serividor que es donde se conencta el servidor 
+const io = new Server(servidor,{
+    pingTimeout: 60000,
+    //Donde esta la ubicacion de nuestro frontEnd
+    cors: {
+        origin:  process.env.FRONTEND_URL,
+    }
+})
+//Conexion con socket io
+io.on('connection', (socket) =>{
+    console.log('Conectado a socket.io')
+    //Definir los eventos de socket io
+    socket.on('abrir proyecto', (proyecto)=>{
+        //Enviando a una sala a diferente usuario
+        //En que pagina esta cada usuario
+        socket.join(proyecto)    
+    });
+    //Escuchando un evento
+    socket.on('nueva tarea', (tarea) =>{
+        const proyecto = tarea.proyecto
+        //Emitiendo hacia el frontend
+        socket.on(proyecto).emit('tarea agregada', tarea)
+    });
+
+    socket.on('eliminar tarea' , tarea =>{
+        const proyecto = tarea.proyecto
+        socket.to(proyecto).emit('tarea eliminada', tarea)
+    })
+    socket.on('actualizar tarea' ,(tarea)=> {
+        const proyecto = tarea.proyecto._id
+        socket.to(proyecto).emit('tarea actualizada', tarea)
+    })
+
+    socket.on('cambiar estado', (tarea)=>{
+        const proyecto = tarea.proyecto._id
+        socket.to(proyecto).emit('nuevo estado', tarea)
+    })
+
+})

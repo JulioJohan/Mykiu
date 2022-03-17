@@ -33,5 +33,5 @@ router.route('/:id')
 //id del proyecto
 router.post('/colaboradores', checkAuth, buscarColaborador)
 router.post('/colaboradores/:id',checkAuth, agregarColaborador)
-router.delete('/colaboradores/:id',checkAuth, eliminarColaborador )
+router.post('/eliminar-colaborador/:id',checkAuth, eliminarColaborador )
 export default router;

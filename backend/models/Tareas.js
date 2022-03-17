@@ -33,6 +33,11 @@ const tareaSchema = mongoose.Schema({
         ref: 'Proyecto',
 
     },
+    //Saber quien es el que completo la tarea
+    completado: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario',
+    }
 },{
     timestamps: true
 
