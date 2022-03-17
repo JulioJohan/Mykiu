@@ -28,8 +28,7 @@ export const emailRegistro = async(datos) => {
        html:`<p>Hola: ${nombre} Comprueba tu cuenta en Mykiu</p>
         <p>Tu cuenta ya casi esta lista, solo debes comprobarla en el siguiente enlace:
         <a href = "${process.env.FRONTEND_URL}/confirmar/${token}">Comprobar Cuenta</a>       
-       <p> Si tu no creaste esta cuente, puedes ignorar el mensaje </p>
-        `
+       <p> Si tu no creaste esta cuente, puedes ignorar el mensaje </p>`
    })
 }
 

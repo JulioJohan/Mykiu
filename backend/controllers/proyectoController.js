@@ -44,17 +44,14 @@ const obtenerProyecto = async(req, res) => {
      //Comprabar de que la persona que quiere acceder a proyecto es el que lo creo  y si eres colaborador
      //some, acepta una implementacion 
      if(proyecto.creador.toString() !== req.usuario._id.toString() && 
-     !proyecto.colaboradores.some
-        (colaborador => colaborador._id.toString() === req.usuario._id.toString()
-     )){
+     !proyecto.colaboradores.some(
+        (colaborador) => colaborador._id.toString() === req.usuario._id.toString()
+        )){
          const error = new Error("Accion no valida")
          return res.status(401).json({msg: error.message}); 
      }
-     
-
      //Obtener las tareas del proyecto
       //Tienes que ser el creador del proyecto o colaborador
-        
      res.json(proyecto)
 
 };

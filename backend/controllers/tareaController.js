@@ -119,9 +119,7 @@ const cambiarEstado = async (req, res) => {
      //obtner la id de de la tarea
      const {id} = req.params
      //obteniedno la tarea y el que creo la tarea de ese proyecto
-     const tarea = await Tarea.findById(id)
-     .populate('proyecto')
-    
+     const tarea = await Tarea.findById(id).populate('proyecto') 
      //404 es cuando no encontraste la tarea
      if(!tarea){
          const error =  new Error ('Tarea no encontrada')
@@ -130,20 +128,21 @@ const cambiarEstado = async (req, res) => {
         //comprobando que sea del mismo usuario
          //comprobando que la taraa no haya creado
     if(tarea.proyecto.creador.toString() !== req.usuario._id.toString() && 
-    !tarea.proyecto.colaboradores.some
-    (colaborador => colaborador._id.toString() === req.usuario._id.toString()
+    !tarea.proyecto.colaboradores.some(
+    (colaborador) => colaborador._id.toString() === req.usuario._id.toString()
     
     )
     ){
-            const error =  new Error ('accion no valida')
-            return res.status(403).json({msg: error.message})   
+    const error =  new Error ('accion no valida')
+    return res.status(403).json({msg: error.message})   
     }
-    tarea.estado =! tarea.estado
+    tarea.estado = !tarea.estado
     tarea.completado = req.usuario._id
     await tarea.save()
 
     const tareaAlmacenada = await Tarea.findById(id)
-     .populate('proyecto').completado('completado')
+    .populate('proyecto')
+    .populate('completado')
 
     res.json(tareaAlmacenada)
 

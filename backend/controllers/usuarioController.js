@@ -172,7 +172,7 @@ const nuevoPassword = async (req, res) =>{
            console.log(error)
        }
     }else{
-           //Mandando mensaje a postmain
+           //Mandando mensaje a postman
            const error = new Error("Token no valido")
            return res.status(404).json({msg: error.message});
      }

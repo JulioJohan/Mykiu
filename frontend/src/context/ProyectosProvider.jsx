@@ -468,7 +468,7 @@ const obtenerProyecto = async id => {
             // Todos los usuarios que tengan abierto ese proyecto
             setProyecto(proyectoActualizado )
     }
-    const eliminarTareaProyecto = (tarea) =>{
+    const eliminarTareaProyecto = tarea =>{
              //DOOM
         //Proyecto Actualizado
         const proyectoActualizado = {...proyecto}
@@ -477,13 +477,13 @@ const obtenerProyecto = async id => {
         setProyecto(proyectoActualizado)
     }
 
-    const actualizarTareaProyecto = (tarea) =>{
+    const actualizarTareaProyecto = tarea =>{
         const proyectoActualizado = {...proyecto}
         proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState => 
             tareaState._id === tarea._id ? tarea : tareaState)
         setProyecto(proyectoActualizado)
     }
-    const cambiarEstadoTarea = (tarea) =>{
+    const cambiarEstadoTarea = tarea =>{
         const proyectoActualizado = {...proyecto}
         proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState => 
         tareaState._id === tarea._id ? tarea: tareaState)

@@ -87,7 +87,7 @@ io.on('connection', (socket) =>{
         socket.on(proyecto).emit('tarea agregada', tarea)
     });
 
-    socket.on('eliminar tarea' , tarea =>{
+    socket.on('eliminar tarea' , (tarea) =>{
         const proyecto = tarea.proyecto
         socket.to(proyecto).emit('tarea eliminada', tarea)
     })
@@ -97,6 +97,7 @@ io.on('connection', (socket) =>{
     })
 
     socket.on('cambiar estado', (tarea)=>{
+        //Leer el proyecto
         const proyecto = tarea.proyecto._id
         socket.to(proyecto).emit('nuevo estado', tarea)
     })
