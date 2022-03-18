@@ -17,7 +17,7 @@ import Alerta from "../components/Alerta";
 //Importando el componenete de Colaborador
 import Colaborador from "../components/Colaborador";
 import ModalEliminarColaborador from "../components/ModalEliminarColaborador"
-import io, { Socket } from 'socket.io-client'
+import io from 'socket.io-client'
 let socket
 
 const Proyecto = () => {
@@ -45,10 +45,10 @@ const Proyecto = () => {
   useEffect(()=>{
     socket.on('tarea agregada', tareaNueva =>{
       //Actualizando tareas
-      if(tareaNueva.proyecto == proyecto._id){
+      if(tareaNueva.proyecto === proyecto._id){
         submitTareasProyecto(tareaNueva)
       }
-    })
+  })
     socket.on('tarea eliminada', tareaEliminada => {
       if(tareaEliminada.proyecto === proyecto._id){
         eliminarTareaProyecto(tareaEliminada)

@@ -55,12 +55,10 @@ const ProyectosProvider = ({children}) =>{
                 
             }catch(error){
                 console.log(error)
-            }finally{
-                setCargando(false)
-            }
         }
+    }
         obtenerProyectos()
-    },[auth])
+    },[])
 
     useEffect(()=>{
         socket = io(import.meta.env.VITE_BACKEND_URL )
@@ -252,7 +250,9 @@ const obtenerProyecto = async id => {
             }
             const {data} = await clienteAxios.post('/tareas',tarea, config)
           
-           
+            // const proyectoActualizado = {...proyecto}
+            // proyectoActualizado.tareas = [...proyecto.tareas, data]
+            // setProyecto(proyectoActualizado)
             //Reiniciando la alerta
             setAlerta({})
             //Reiniciando el modal del formulario
@@ -465,7 +465,6 @@ const obtenerProyecto = async id => {
             //Copia del proyecto
             const proyectoActualizado = {...proyecto}
             proyectoActualizado.tareas = [...proyectoActualizado.tareas, tarea]
-            // Todos los usuarios que tengan abierto ese proyecto
             setProyecto(proyectoActualizado )
     }
     const eliminarTareaProyecto = tarea =>{

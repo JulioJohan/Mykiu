@@ -68,9 +68,9 @@ const io = new Server(servidor,{
     pingTimeout: 60000,
     //Donde esta la ubicacion de nuestro frontEnd
     cors: {
-        origin:  process.env.FRONTEND_URL,
-    }
-})
+        origin: process.env.FRONTEND_URL,
+    },
+});
 //Conexion con socket io
 io.on('connection', (socket) =>{
     console.log('Conectado a socket.io')
@@ -90,16 +90,15 @@ io.on('connection', (socket) =>{
     socket.on('eliminar tarea' , (tarea) =>{
         const proyecto = tarea.proyecto
         socket.to(proyecto).emit('tarea eliminada', tarea)
-    })
+    });
     socket.on('actualizar tarea' ,(tarea)=> {
         const proyecto = tarea.proyecto._id
         socket.to(proyecto).emit('tarea actualizada', tarea)
-    })
+    });
 
     socket.on('cambiar estado', (tarea)=>{
         //Leer el proyecto
         const proyecto = tarea.proyecto._id
         socket.to(proyecto).emit('nuevo estado', tarea)
-    })
-
-})
+    });
+});

@@ -104,7 +104,7 @@ const confirmar = async (req, res) =>{
         usuarioConfirmario.token = "";
         //Almacenando en la base de datos
         await usuarioConfirmario.save();
-        res.json({msg: 'Usuario Confirmado Correctamentw'})
+        res.json({msg: 'Usuario Confirmado Correctamente'})
     }catch(error){
         console.log(error)
     }
@@ -166,7 +166,7 @@ const nuevoPassword = async (req, res) =>{
         //poniendo otro token para que no el mismo
         usuario.token = ''
        try{
-        await usuario.save
+        await usuario.save()
         res.json ({msg : 'Password modificado'})
        }catch(error){
            console.log(error)
