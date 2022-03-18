@@ -73,7 +73,7 @@ const io = new Server(servidor,{
 });
 //Conexion con socket io
 io.on('connection', (socket) =>{
-    console.log('Conectado a socket.io')
+    //console.log('Conectado a socket.io')
     //Definir los eventos de socket io
     socket.on('abrir proyecto', (proyecto)=>{
         //Enviando a una sala a diferente usuario
@@ -87,7 +87,7 @@ io.on('connection', (socket) =>{
         socket.to(proyecto).emit('tarea agregada', tarea)
     });
 
-    socket.on('eliminar tarea' , (tarea) =>{
+    socket.on('eliminar tarea',(tarea) =>{
         const proyecto = tarea.proyecto
         socket.to(proyecto).emit('tarea eliminada', tarea)
     });
