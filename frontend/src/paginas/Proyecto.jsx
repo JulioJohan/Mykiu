@@ -25,7 +25,7 @@ const Proyecto = () => {
   const params = useParams();
 
   //Utilizando la funcion que se creo en Proyectos Provider
-  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta, submitTareasProyecto, eliminarTareaProyecto, actualizarTareaProyecto} =
+  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta, submitTareasProyecto, eliminarTareaProyecto, actualizarTareaProyecto, cambiarEstadoTarea} =
     useProyectos();
   const admin = useAdmin()
   
@@ -53,7 +53,7 @@ const Proyecto = () => {
       if(tareaEliminada.proyecto === proyecto._id){
         eliminarTareaProyecto(tareaEliminada)
       }
-    })
+  })
     socket.on('tarea actualizada', tareaActualizada => {
       if(tareaActualizada.proyecto._id === proyecto._id){
         actualizarTareaProyecto(tareaActualizada)
@@ -64,7 +64,7 @@ const Proyecto = () => {
         cambiarEstadoTarea(nuevoEstadoTarea)
       }
     })
-  })
+})
   //Ejecutandose todo el tiempo
   useEffect(()=>{
     socket.on('respuesta', (persona)=>{

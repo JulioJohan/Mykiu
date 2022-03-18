@@ -84,7 +84,7 @@ io.on('connection', (socket) =>{
     socket.on('nueva tarea', (tarea) =>{
         const proyecto = tarea.proyecto
         //Emitiendo hacia el frontend
-        socket.on(proyecto).emit('tarea agregada', tarea)
+        socket.to(proyecto).emit('tarea agregada', tarea)
     });
 
     socket.on('eliminar tarea' , (tarea) =>{

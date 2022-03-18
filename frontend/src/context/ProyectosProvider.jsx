@@ -283,7 +283,10 @@ const obtenerProyecto = async id => {
         
             //DOOM
         //Proyecto Actualizado
-       
+        // const proyectoActualizado = {...proyecto}
+        // proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState =>
+        // tareaState._id === data._id ? data : tareaState)
+        // setProyecto(proyectoActualizado) 
         setAlerta({})
         setModalFormularioTarea(false)
 
@@ -319,6 +322,10 @@ const obtenerProyecto = async id => {
 
             //Enviandola a la API
             const {data} = await clienteAxios.delete(`/tareas/${tarea._id}`, config)
+        // const proyectoActualizado = {...proyecto}
+        // proyectoActualizado.tarea = proyectoActualizado.tareas.filter(tareaState=>
+        // tareaState._id !== tarea._id)
+        // setProyecto(proyectoActualizado)
         setAlerta({
             msg: data.msg,
             error: false
@@ -445,6 +452,11 @@ const obtenerProyecto = async id => {
         }
         const {data} = await clienteAxios.post(`/tareas/estado/${id}`,{}, config)
 
+        // const proyectoActualizado = {...proyecto}
+        // proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState=>
+        // tareaState._id === data._id ? data : tareaState)
+        // setProyecto(proyectoActualizado)
+
         setTarea({})
         setAlerta({})
 
@@ -472,14 +484,14 @@ const obtenerProyecto = async id => {
         //Proyecto Actualizado
         const proyectoActualizado = {...proyecto}
         proyectoActualizado.tareas = proyectoActualizado.tareas.filter(tareaState =>
-            tareaState._id !== tarea._id)
+        tareaState._id !== tarea._id)
         setProyecto(proyectoActualizado)
     }
 
     const actualizarTareaProyecto = tarea =>{
         const proyectoActualizado = {...proyecto}
         proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState => 
-            tareaState._id === tarea._id ? tarea : tareaState)
+        tareaState._id === tarea._id ? tarea : tareaState)
         setProyecto(proyectoActualizado)
     }
     const cambiarEstadoTarea = tarea =>{
